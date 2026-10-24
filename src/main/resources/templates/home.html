@@ -1,0 +1,90 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gamer Events</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <nav class="menu">
+      <a th:href="@{/home}">Inicio</a>
+
+      <span sec:authorize="isAnonymous()">
+        <a th:href="@{/registro}">Registrarse</a>
+        <a th:href="@{/login}">Iniciar sesión</a>
+      </span>
+
+      <span sec:authorize="isAuthenticated()">
+        <a th:href="@{/eventos}">Eventos</a>
+        <a th:href="@{/perfil}">Mi perfil</a>
+        <form th:action="@{/logout}" method="post" class="form-menu">
+          <button type="submit" class="boton-enlace">Cerrar sesión</button>
+        </form>
+      </span>
+    </nav>
+
+    <header class="hero">
+      <h1 th:text="|Bienvenido a ${nombreSitio}!|">Bienvenido</h1>
+      <p>Encuentra torneos, convenciones y encuentros de la comunidad gamer.</p>
+    </header>
+
+    <section class="seccion">
+      <h2>Eventos destacados</h2>
+      <div class="tarjetas">
+        <article class="tarjeta destacada" th:each="e : ${destacados}">
+          <span class="etiqueta" th:text="${e.categoria()}">Categoría</span>
+          <h3 th:text="${e.nombre()}">Nombre</h3>
+          <p class="meta">
+            <span th:text="${e.fechaTexto()}">fecha</span> ·
+            <span th:text="${e.ubicacion()}">lugar</span>
+          </p>
+          <p th:text="${e.descripcion()}">Descripción</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <h2>Próximos eventos</h2>
+      <div class="tarjetas">
+        <article class="tarjeta" th:each="e : ${proximos}">
+          <span class="etiqueta" th:text="${e.categoria()}">Categoría</span>
+          <h3 th:text="${e.nombre()}">Nombre</h3>
+          <p class="meta">
+            <span th:text="${e.fechaTexto()}">fecha</span> ·
+            <span th:text="${e.ubicacion()}">lugar</span>
+          </p>
+        </article>
+      </div>
+      <p class="aviso" sec:authorize="isAnonymous()">
+        Para ver el detalle de cada evento y buscar por categoría, fecha o
+        ubicación,
+        <a th:href="@{/login}">inicia sesión</a> o
+        <a th:href="@{/registro}">crea tu cuenta</a>.
+      </p>
+    </section>
+
+    <section class="seccion">
+      <h2>Marcas asociadas</h2>
+      <div class="marcas">
+        <div class="marca">
+          PixelForge<br /><small>Periféricos gamer</small>
+        </div>
+        <div class="marca">
+          NovaChair<br /><small>Sillas ergonómicas</small>
+        </div>
+        <div class="marca">TurboByte<br /><small>Componentes PC</small></div>
+        <div class="marca">
+          EnergyQuest<br /><small>Bebidas energéticas</small>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pie">
+      © Gamer Events · Proyecto Seguridad y Calidad en el Desarrollo de Software
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iniciar sesión - Gamer Events</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <h1>Iniciar sesión</h1>
+
+    <p th:if="${param.error}" class="error">
+      Usuario o contraseña incorrectos.
+    </p>
+    <p th:if="${param.logout}" class="ok">Cerraste sesión correctamente.</p>
+
+    <form th:action="@{/login}" method="post">
+      <div>
+        <div>
+          <label>Correo: <input type="text" name="username" /></label>
+        </div>
+      </div>
+      <div>
+        <label>Contraseña: <input type="password" name="password" /></label>
+      </div>
+      <div><input type="submit" value="Entrar" /></div>
+    </form>
+    <p>
+      <a th:href="@{/home}">Volver al inicio</a> ·
+      <a th:href="@{/registro}">Crear cuenta</a>
+    </p>
+    <p th:if="${param.registrado}" class="ok">
+      Cuenta creada. Ya puedes iniciar sesión.
+    </p>
+  </body>
+</html>

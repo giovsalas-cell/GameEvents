@@ -1,0 +1,71 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eventos - Gamer Events</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <nav class="menu">
+      <a th:href="@{/home}">Inicio</a>
+      <a th:href="@{/eventos}">Eventos</a>
+      <a th:href="@{/perfil}">Mi perfil</a>
+      <form th:action="@{/logout}" method="post" class="form-menu">
+        <button type="submit" class="boton-enlace">Cerrar sesión</button>
+      </form>
+    </nav>
+
+    <h1>Eventos gamer</h1>
+
+    <form th:action="@{/eventos}" method="get" class="filtros">
+      <label
+        >Categoría
+        <select name="categoria">
+          <option value="">Todas</option>
+          <option
+            th:each="c : ${categorias}"
+            th:value="${c}"
+            th:text="${c}"
+            th:selected="${c == categoriaSel}"
+          ></option>
+        </select>
+      </label>
+      <label
+        >Fecha
+        <input type="date" name="fecha" th:value="${fechaSel}" />
+      </label>
+      <label
+        >Ubicación
+        <input
+          type="text"
+          name="ubicacion"
+          th:value="${ubicacionSel}"
+          placeholder="Ej: Santiago"
+        />
+      </label>
+      <input type="submit" value="Buscar" />
+      <a th:href="@{/eventos}">Limpiar</a>
+    </form>
+
+    <section class="seccion">
+      <p class="aviso" th:if="${#lists.isEmpty(eventos)}">
+        No se encontraron eventos con esos filtros.
+      </p>
+      <div class="tarjetas">
+        <article class="tarjeta" th:each="e : ${eventos}">
+          <span class="etiqueta" th:text="${e.categoria()}">Categoría</span>
+          <h3 th:text="${e.nombre()}">Nombre</h3>
+          <p class="meta">
+            <span th:text="${e.fechaTexto()}">fecha</span> ·
+            <span th:text="${e.horaTexto()}">hora</span>
+          </p>
+          <p class="meta"><span th:text="${e.ubicacion()}">lugar</span></p>
+          <a class="boton" th:href="@{/eventos/{id}(id=${e.id()})}"
+            >Ver detalle</a
+          >
+        </article>
+      </div>
+    </section>
+  </body>
+</html>

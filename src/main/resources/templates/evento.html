@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="|${evento.nombre()} - Gamer Events|">Evento</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <nav class="menu">
+      <a th:href="@{/home}">Inicio</a>
+      <a th:href="@{/eventos}">Eventos</a>
+      <a th:href="@{/perfil}">Mi perfil</a>
+      <form th:action="@{/logout}" method="post" class="form-menu">
+        <button type="submit" class="boton-enlace">Cerrar sesión</button>
+      </form>
+    </nav>
+
+    <section class="seccion detalle">
+      <span class="etiqueta" th:text="${evento.categoria()}">Categoría</span>
+      <h1 th:text="${evento.nombre()}">Nombre</h1>
+      <p th:text="${evento.descripcion()}">Descripción</p>
+
+      <h2>Fecha y hora</h2>
+      <p>
+        <span th:text="${evento.fechaTexto()}">fecha</span> a las
+        <span th:text="${evento.horaTexto()}">hora</span>
+      </p>
+
+      <h2>Dirección</h2>
+      <p>
+        <span th:text="${evento.direccion()}">dirección</span>,
+        <span th:text="${evento.ubicacion()}">ciudad</span>
+      </p>
+
+      <h2>Organizadores</h2>
+      <p th:text="${evento.organizadores()}">Organizadores</p>
+
+      <h2>Servicios disponibles</h2>
+      <ul>
+        <li th:each="s : ${evento.servicios()}" th:text="${s}">Servicio</li>
+      </ul>
+
+      <h2>Principales expositores</h2>
+      <ul>
+        <li th:each="x : ${evento.expositores()}" th:text="${x}">Expositor</li>
+      </ul>
+
+      <p><a class="boton" th:href="@{/eventos}">← Volver al listado</a></p>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registro - Gamer Events</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <h1>Crear cuenta</h1>
+
+    <form th:action="@{/registro}" th:object="${registroForm}" method="post">
+      <div>
+        <label>Nombre: <input type="text" th:field="*{nombre}" /></label>
+        <p
+          class="error"
+          th:if="${#fields.hasErrors('nombre')}"
+          th:errors="*{nombre}"
+        ></p>
+      </div>
+      <div>
+        <label>Correo: <input type="email" th:field="*{email}" /></label>
+        <p
+          class="error"
+          th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"
+        ></p>
+      </div>
+      <div>
+        <label
+          >Contraseña: <input type="password" th:field="*{password}"
+        /></label>
+        <p
+          class="error"
+          th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+        ></p>
+      </div>
+      <div><input type="submit" value="Registrarme" /></div>
+    </form>
+
+    <p><a th:href="@{/home}">Volver al inicio</a></p>
+  </body>
+</html>
